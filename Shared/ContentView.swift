@@ -629,7 +629,7 @@ struct ContentView: View {
             }
         }
         .fullScreenCover(isPresented: self.$isActive){
-        FirstLaunch(isAActive: $isActive).onDisappear{
+            FirstLaunch(isAActive: $isActive, firstLaunch2: $firstLaunch).onDisappear{
             ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
                 GADMobileAds.sharedInstance().start(completionHandler: nil)
             })
@@ -637,7 +637,6 @@ struct ContentView: View {
         }
         .onAppear {
             if firstLaunch {
-            firstLaunch = false
             isActive = true
             }
             screen = UIScreen.main.bounds.size
