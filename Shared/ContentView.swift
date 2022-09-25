@@ -46,6 +46,10 @@ class UserProfile: ObservableObject {
 }
 
 struct ContentView: View {
+
+    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+    let generator = UINotificationFeedbackGenerator()
+    
     @State private var isActive = false
     @AppStorage("FirstLaunch") var firstLaunch = true
 
@@ -76,6 +80,7 @@ struct ContentView: View {
     }
     
     var body: some View {
+        
         ZStack {
             
             LinearGradient(gradient: Gradient(colors: [.white, .green]), startPoint: .top, endPoint: .bottom)
@@ -147,12 +152,16 @@ struct ContentView: View {
                                 Button(action: {
                                     self.stopWatchManeger.start()
                                     self.stopWatchManeger2.start()
+                                    impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+
                                 }){
                                     TextView(label : "スタート")
                                 }
                                 Spacer().frame(height: 10)
                                 Button(action: {
                                     self.sheetAlertRire.toggle()
+                                    impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+
                                 }){
                                     TextView(label : "履 歴")
                                 }.sheet(isPresented: $sheetAlertRire) {
@@ -165,12 +174,16 @@ struct ContentView: View {
                                 Button(action: {
                                     self.stopWatchManeger.pause()
                                     self.stopWatchManeger2.pause()
+                                    impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+
                                 }){
                                     TextView(label : "一時停止")
                                 }
                                 Spacer().frame(height: 10)
                                 Button(action: {
                                     
+                                    impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+
                                     if lap234Purchase == "false" {
                                         
                                         if laptime.count < 30 {
@@ -222,11 +235,15 @@ struct ContentView: View {
                                 Button(action: {
                                     self.stopWatchManeger.start()
                                     self.stopWatchManeger2.start()
+                                    impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+
                                 }){
                                     TextView(label : "再開")
                                 }
                                 Spacer().frame(height: 10)
                                 Button(action: {
+                                    self.generator.notificationOccurred(.error) //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+
 //-書き込み---------------------------書き込み---------------------------書き込み--------------------------
                                     
                                     do {
@@ -335,12 +352,16 @@ struct ContentView: View {
                                 Button(action: {
                                     self.stopWatchManeger.start()
                                     self.stopWatchManeger2.start()
+                                    impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+
                                 }){
                                     TextView(label : "スタート")
                                 }
                                 Spacer().frame(height: 10)
                                 Button(action: {
                                     self.sheetAlertRire.toggle()
+                                    impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+
                                 }){
                                     TextView(label : "履 歴")
                                 }.sheet(isPresented: $sheetAlertRire) {
@@ -354,12 +375,16 @@ struct ContentView: View {
                                 Button(action: {
                                     self.stopWatchManeger.pause()
                                     self.stopWatchManeger2.pause()
+                                    impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+
                                 }){
                                     TextView(label : "一時停止")
                                 }
                                 Spacer().frame(height: 10)
                                 Button(action: {
-                                    
+
+                                    impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+
                                     if lap234Purchase == "false" {
                                         if laptime.count < 30 {
                                             
@@ -410,11 +435,16 @@ struct ContentView: View {
                                 Button(action: {
                                     self.stopWatchManeger.start()
                                     self.stopWatchManeger2.start()
+                                    impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+
                                 }){
                                     TextView(label : "再開")
                                 }
                                 Spacer().frame(height: 10)
                                 Button(action: {
+                                    
+                                    self.generator.notificationOccurred(.error) //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+
 //-書き込み---------------------------書き込み---------------------------書き込み--------------------------
                                     
                                     do {
