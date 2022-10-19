@@ -40,8 +40,11 @@ struct SecondView: View {
                     }.frame(height: 150)
                     .border(Color.black, width: 2)
                     Spacer().frame(height: 15)
-                    Text("このApp内課金オプションは、")
-                    Text("非消耗型オプションです。")
+                    HStack{
+                        Text("(見やすいストップウォッチ Ver.1.5.1)")
+                            .font(.subheadline)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    }
                     Spacer().frame(height: 15)
                     Text("アプリを再インストールした場合は、")
                     Text("下記の「復元する」から購入履歴の")

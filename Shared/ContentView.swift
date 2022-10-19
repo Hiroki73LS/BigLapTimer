@@ -182,12 +182,12 @@ struct ContentView: View {
                                 Spacer().frame(height: 10)
                                 Button(action: {
                                     
-                                    impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
-
                                     if lap234Purchase == "false" {
                                         
                                         if laptime.count < 30 {
-                                            
+
+                                            impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+
                                             lapNo.insert(String(lapn), at: 0)
                                             if stopWatchManeger.hour > 0 {
                                                 total.insert(String(format: "%01d:%02d:%02d.%02d", stopWatchManeger.hour, stopWatchManeger.minutes, stopWatchManeger.second, stopWatchManeger.milliSecond), at: 0)
@@ -208,6 +208,9 @@ struct ContentView: View {
                                     }
                                     if lap234Purchase == "true" {
                                         if laptime.count < 99 {
+
+                                            impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+
                                             lapNo.insert(String(lapn), at: 0)
                                             if stopWatchManeger.hour > 0 {
                                                 total.insert(String(format: "%01d:%02d:%02d.%02d", stopWatchManeger.hour, stopWatchManeger.minutes, stopWatchManeger.second, stopWatchManeger.milliSecond), at: 0)
@@ -383,11 +386,11 @@ struct ContentView: View {
                                 Spacer().frame(height: 10)
                                 Button(action: {
 
-                                    impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
-
                                     if lap234Purchase == "false" {
                                         if laptime.count < 30 {
-                                            
+
+                                            impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+
                                             lapNo.insert(String(lapn), at: 0)
                                             if stopWatchManeger.hour > 0 {
                                                 total.insert(String(format: "%01d:%02d:%02d.%02d", stopWatchManeger.hour, stopWatchManeger.minutes, stopWatchManeger.second, stopWatchManeger.milliSecond), at: 0)
@@ -408,6 +411,9 @@ struct ContentView: View {
                                     }
                                     if lap234Purchase == "true" {
                                         if laptime.count < 99 {
+
+                                            impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                            
                                             lapNo.insert(String(lapn), at: 0)
                                             if stopWatchManeger.hour > 0 {
                                                 total.insert(String(format: "%01d:%02d:%02d.%02d", stopWatchManeger.hour, stopWatchManeger.minutes, stopWatchManeger.second, stopWatchManeger.milliSecond), at: 0)
