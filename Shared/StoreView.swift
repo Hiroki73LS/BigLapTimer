@@ -7,7 +7,11 @@ enum AlertType {
 }
 
 struct SecondView: View {
-    
+    @Environment(\.dismiss) var dismiss
+    @AppStorage("FirstLaunch") var firstLaunch = true
+    @State private var isActive = false
+    @AppStorage("vbmode2") var vbmode2 = true
+
     @State var restoreAlert : Bool = false
     @State var priceLabel : String = "購入する"
     @Binding var lap234Purchase : String
@@ -26,10 +30,33 @@ struct SecondView: View {
             
             VStack{
                 Spacer().frame(height: 50)
-                Text("App内課金オプション").font(.largeTitle)
-                Spacer().frame(height: 10)
+                VStack{
+                HStack{
+                    Spacer().frame(width: 20)
+                    Text("・振動フィードバック").font(.title2)
+                    Spacer()
+                    Toggle("", isOn: $vbmode2)
+                    .labelsHidden()
+                    Spacer().frame(width: 20)
+                }
+                    HStack{
+                        Spacer().frame(width: 20)
+                        Text("・アプリの使い方").font(.title2)
+                        Spacer()
+                        Button(action: {
+                                self.isActive.toggle()
+                        }){
+                            Text("表示する")
+                                .font(.title2)
+                        }
+                        .sheet(isPresented: $isActive) {
+                            FirstLaunch(isAActive: $isActive, firstLaunch2: $firstLaunch)
+                        }
+                        Spacer().frame(width: 40)
+                    }}
+                Spacer().frame(height: 20)
                 VStack(alignment: .leading){
-                    Text("【下記の機能が追加されます】").bold()
+                    Text("【App内課金により機能制限の解除ができます。】").bold().font(.subheadline)
                     Spacer().frame(height: 10)
                     VStack(alignment: .leading){
                         Text(" １．広告非表示")
@@ -41,7 +68,7 @@ struct SecondView: View {
                     .border(Color.black, width: 2)
                     Spacer().frame(height: 15)
                     HStack{
-                        Text("(見やすいストップウォッチ Ver.1.5.1)")
+                        Text("(見やすいストップウォッチ Ver.1.7)")
                             .font(.subheadline)
                             .frame(maxWidth: .infinity, alignment: .center)
                     }
@@ -50,8 +77,8 @@ struct SecondView: View {
                     Text("下記の「復元する」から購入履歴の")
                     Text("復元をしてください。")
                 }.font(.title2)
-                    .frame(width: 370, height: 350)
-                    Spacer().frame(height: 20)
+                    .frame(width: 370, height: 300)
+                    Spacer().frame(height: 10)
                 Text("(JPY 160円)").font(.title3)
                 
                 Button(action: {

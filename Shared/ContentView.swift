@@ -3,6 +3,7 @@ import RealmSwift
 import GoogleMobileAds
 import AppTrackingTransparency
 import AdSupport
+import AVFoundation
 
 
 struct AdView: UIViewRepresentable {
@@ -52,10 +53,12 @@ struct ContentView: View {
     
     @State private var isActive = false
     @AppStorage("FirstLaunch") var firstLaunch = true
+    @AppStorage("vbmode2") var vbmode2 = true
 
     @State var screen: CGSize?
     @ObservedObject var model = viewModel()
     @ObservedObject var profile = UserProfile()
+    @ObservedObject var soundAlert = SoundAlert()
     @ObservedObject var stopWatchManeger = StopWatchManeger()
     @ObservedObject var stopWatchManeger2 = StopWatchManeger2()
     @State var total : [String]
@@ -67,6 +70,7 @@ struct ContentView: View {
     @State var Second = 0
     @State var minites = 0
     @State var hour = 0
+    @State var oldMin = 0
     @State var flag = true
     @State var nowTime : Double
     @State var sheetAlert : Bool = false
@@ -78,7 +82,7 @@ struct ContentView: View {
         dformat.dateFormat = "yyyy/M/d"
         return dformat
     }
-    
+
     var body: some View {
         
         ZStack {
@@ -117,7 +121,7 @@ struct ContentView: View {
                                 Button(action: {
                                     self.sheetAlert.toggle()
                                 }) {
-                                    Image(systemName: "info.circle")
+                                    Image(systemName: "gear")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 28, height: 28)
@@ -152,16 +156,19 @@ struct ContentView: View {
                                 Button(action: {
                                     self.stopWatchManeger.start()
                                     self.stopWatchManeger2.start()
-                                    impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
-
+                                    self.soundAlert.start()
+                                    if vbmode2 == true{
+                                        impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                    }
                                 }){
                                     TextView(label : "スタート")
                                 }
                                 Spacer().frame(height: 10)
                                 Button(action: {
                                     self.sheetAlertRire.toggle()
-                                    impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
-
+                                    if vbmode2 == true{
+                                        impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                    }
                                 }){
                                     TextView(label : "履 歴")
                                 }.sheet(isPresented: $sheetAlertRire) {
@@ -174,7 +181,10 @@ struct ContentView: View {
                                 Button(action: {
                                     self.stopWatchManeger.pause()
                                     self.stopWatchManeger2.pause()
-                                    impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                    self.soundAlert.pause()
+                                    if vbmode2 == true{
+                                        impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                    }
 
                                 }){
                                     TextView(label : "一時停止")
@@ -186,7 +196,9 @@ struct ContentView: View {
                                         
                                         if laptime.count < 30 {
 
-                                            impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                            if vbmode2 == true{
+                                                impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                            }
 
                                             lapNo.insert(String(lapn), at: 0)
                                             if stopWatchManeger.hour > 0 {
@@ -209,7 +221,9 @@ struct ContentView: View {
                                     if lap234Purchase == "true" {
                                         if laptime.count < 99 {
 
-                                            impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                            if vbmode2 == true{
+                                                impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                            }
 
                                             lapNo.insert(String(lapn), at: 0)
                                             if stopWatchManeger.hour > 0 {
@@ -238,14 +252,18 @@ struct ContentView: View {
                                 Button(action: {
                                     self.stopWatchManeger.start()
                                     self.stopWatchManeger2.start()
-                                    impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
-
-                                }){
+                                    self.soundAlert.start()
+                                    if vbmode2 == true{
+                                        impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                    }
+          }){
                                     TextView(label : "再開")
                                 }
                                 Spacer().frame(height: 10)
                                 Button(action: {
-                                    self.generator.notificationOccurred(.error) //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                    if vbmode2 == true{
+                                        impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                    }
 
 //-書き込み---------------------------書き込み---------------------------書き込み--------------------------
                                     
@@ -329,6 +347,7 @@ struct ContentView: View {
                                     laptime.removeAll()
                                     lapNo.removeAll()
                                     lapn = 1
+                                    soundAlert.oldMin = 0
                                     stopWatchManeger.minutes = 00
                                     stopWatchManeger.second = 00
                                     stopWatchManeger.milliSecond = 00
@@ -339,6 +358,7 @@ struct ContentView: View {
                                     stopWatchManeger2.hour = 00
                                     self.stopWatchManeger.stop()
                                     self.stopWatchManeger2.stop()
+                                    self.soundAlert.stop()
                                 }){
                                     TextView(label : "リセット")
                                 }
@@ -355,16 +375,19 @@ struct ContentView: View {
                                 Button(action: {
                                     self.stopWatchManeger.start()
                                     self.stopWatchManeger2.start()
-                                    impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
-
+                                    self.soundAlert.start()
+                                    if vbmode2 == true{
+                                        impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                    }
                                 }){
                                     TextView(label : "スタート")
                                 }
                                 Spacer().frame(height: 10)
                                 Button(action: {
                                     self.sheetAlertRire.toggle()
-                                    impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
-
+                                    if vbmode2 == true{
+                                        impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                    }
                                 }){
                                     TextView(label : "履 歴")
                                 }.sheet(isPresented: $sheetAlertRire) {
@@ -378,8 +401,10 @@ struct ContentView: View {
                                 Button(action: {
                                     self.stopWatchManeger.pause()
                                     self.stopWatchManeger2.pause()
-                                    impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
-
+                                    self.soundAlert.pause()
+                                    if vbmode2 == true{
+                                        impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                    }
                                 }){
                                     TextView(label : "一時停止")
                                 }
@@ -389,8 +414,9 @@ struct ContentView: View {
                                     if lap234Purchase == "false" {
                                         if laptime.count < 30 {
 
-                                            impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
-
+                                            if vbmode2 == true{
+                                                impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                            }
                                             lapNo.insert(String(lapn), at: 0)
                                             if stopWatchManeger.hour > 0 {
                                                 total.insert(String(format: "%01d:%02d:%02d.%02d", stopWatchManeger.hour, stopWatchManeger.minutes, stopWatchManeger.second, stopWatchManeger.milliSecond), at: 0)
@@ -412,8 +438,9 @@ struct ContentView: View {
                                     if lap234Purchase == "true" {
                                         if laptime.count < 99 {
 
-                                            impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
-                                            
+                                            if vbmode2 == true{
+                                                impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                            }
                                             lapNo.insert(String(lapn), at: 0)
                                             if stopWatchManeger.hour > 0 {
                                                 total.insert(String(format: "%01d:%02d:%02d.%02d", stopWatchManeger.hour, stopWatchManeger.minutes, stopWatchManeger.second, stopWatchManeger.milliSecond), at: 0)
@@ -441,7 +468,10 @@ struct ContentView: View {
                                 Button(action: {
                                     self.stopWatchManeger.start()
                                     self.stopWatchManeger2.start()
-                                    impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                    self.soundAlert.start()
+                                    if vbmode2 == true{
+                                        impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                    }
 
                                 }){
                                     TextView(label : "再開")
@@ -449,7 +479,9 @@ struct ContentView: View {
                                 Spacer().frame(height: 10)
                                 Button(action: {
                                     
-                                    self.generator.notificationOccurred(.error) //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                    if vbmode2 == true{
+                                        impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
+                                    }
 
 //-書き込み---------------------------書き込み---------------------------書き込み--------------------------
                                     
@@ -535,6 +567,7 @@ struct ContentView: View {
                                     laptime.removeAll()
                                     lapNo.removeAll()
                                     lapn = 1
+                                    soundAlert.oldMin = 0
                                     stopWatchManeger.minutes = 00
                                     stopWatchManeger.second = 00
                                     stopWatchManeger.milliSecond = 00
@@ -545,6 +578,8 @@ struct ContentView: View {
                                     stopWatchManeger2.hour = 00
                                     self.stopWatchManeger.stop()
                                     self.stopWatchManeger2.stop()
+                                    self.soundAlert.stop()
+
                                 }){
                                     TextView(label : "リセット")
                                 }
@@ -559,7 +594,7 @@ struct ContentView: View {
                                 Button(action: {
                                     self.sheetAlert.toggle()
                                 }) {
-                                    Image(systemName: "info.circle")
+                                    Image(systemName: "gear")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 28, height: 28)
@@ -590,11 +625,11 @@ struct ContentView: View {
                 
 //◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆ラップタイム表示◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
                 HStack{
-                    Text("No.")
+                    Text("No.").font(.title2)
                     Spacer()
-                    Text("Lap Time")
+                    Text("Lap Time").font(.title2)
                     Spacer()
-                    Text("Total Time ")
+                    Text("Total Time ").font(.title2)
                 }
                 if stopWatchManeger.hour > 0 {
                     List {
