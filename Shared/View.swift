@@ -29,8 +29,8 @@ struct TextView2: View {
     
     var body: some View {
         Text(label)
-            .font(.largeTitle)
-            .frame(width: 180, height: 35)
+            .font(.title2)
+            .frame(width: 100, height: 20)
             .foregroundColor(Color(.white))
             .padding(.all)
             .background(Color(.blue))
@@ -44,8 +44,8 @@ struct TextView3: View {
     
     var body: some View {
         Text(label)
-            .font(.largeTitle)
-            .frame(width: 180, height: 35)
+            .font(.title2)
+            .frame(width: 100, height: 20)
             .foregroundColor(Color(.white))
             .padding(.all)
             .background(Color(.gray))

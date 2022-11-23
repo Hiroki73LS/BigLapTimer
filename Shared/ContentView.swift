@@ -93,7 +93,7 @@ struct ContentView: View {
             VStack(spacing:2) {
                 if lap234Purchase == "false"
                 {                AdView()
-                        .frame(width: 320, height: 50)
+                        .frame(height: 50)
                 }
                 Text("Total Time").font(.title)
                 if stopWatchManeger.hour > 9 {

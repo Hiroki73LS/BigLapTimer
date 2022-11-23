@@ -1,8 +1,11 @@
 import SwiftUI
 import SwiftyStoreKit
+import FirebaseCore
 
 @main
 struct BigLapTimerApp: App {
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     init() {
         
@@ -41,6 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     }
                 }
             }
-        }; return true
+        }
+        FirebaseApp.configure()
+        return true
     }
 }

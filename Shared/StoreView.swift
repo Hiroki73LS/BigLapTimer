@@ -27,7 +27,6 @@ struct SecondView: View {
             LinearGradient(gradient: Gradient(colors: [.white, .green]), startPoint: .top, endPoint: .bottom)
                 .ignoresSafeArea()
             
-            
             VStack{
                 Spacer().frame(height: 50)
                 VStack{
@@ -53,7 +52,22 @@ struct SecondView: View {
                             FirstLaunch(isAActive: $isActive, firstLaunch2: $firstLaunch)
                         }
                         Spacer().frame(width: 40)
-                    }}
+                    }
+                    Spacer().frame(height: 10)
+                                        HStack{
+                                            Spacer().frame(width: 20)
+                                            Text("・作者のその他のアプリ").font(.title3)
+                                            Spacer()
+                                            
+                                            if let url = URL(string: "https://apps.apple.com/us/developer/hiroki-hayashi/id1602465862") {
+                                                        Link("AppStoreへ", destination: url)
+                                                    .font(.title2)
+                                                    }
+                                            Spacer().frame(width: 20)
+                                            }
+                                        Spacer().frame(height: 10)
+                    
+                }
                 Spacer().frame(height: 20)
                 VStack(alignment: .leading){
                     Text("【App内課金により機能制限の解除ができます。】").bold().font(.subheadline)
@@ -68,7 +82,7 @@ struct SecondView: View {
                     .border(Color.black, width: 2)
                     Spacer().frame(height: 15)
                     HStack{
-                        Text("(見やすいストップウォッチ Ver.1.7)")
+                        Text("(見やすいストップウォッチ Ver.1.8)")
                             .font(.subheadline)
                             .frame(maxWidth: .infinity, alignment: .center)
                     }
@@ -80,7 +94,8 @@ struct SecondView: View {
                     .frame(width: 370, height: 300)
                     Spacer().frame(height: 10)
                 Text("(JPY 160円)").font(.title3)
-                
+                HStack{
+                    Spacer()
                 Button(action: {
                     manageProgress()
                     print("Storkit読み込み")
@@ -126,7 +141,7 @@ struct SecondView: View {
                     }
                 }.disabled(Buttondisable)
                 .buttonStyle(MyButtonStyle2())
-                Spacer().frame(height: 25)
+                Spacer().frame(width: 25)
                 
                 Button(action: {
                     manageProgress2()
@@ -179,8 +194,9 @@ struct SecondView: View {
                             restoreAlert = false
                         }))
                     }}
-                Spacer().frame(height: 35)
+                Spacer()
             }
+        }
             .onAppear() {
                 print("restoreAlert:\(restoreAlert)")
                 SwiftyStoreKit.retrieveProductsInfo(["lap50"]) { result in
