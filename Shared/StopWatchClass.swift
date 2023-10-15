@@ -16,6 +16,7 @@ class StopWatchManeger:ObservableObject{
     @Published var second = 00
     @Published var minutes = 00
     @Published var hour = 0
+
     var nowTime : Double = 0
     var elapsedTime : Double = 0
     var displayTime: Double = 0
@@ -26,7 +27,7 @@ class StopWatchManeger:ObservableObject{
     func start(){
         mode = .start
         
-        self.nowTime = NSDate.timeIntervalSinceReferenceDate
+            self.nowTime = NSDate.timeIntervalSinceReferenceDate
         
         timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true){ timer in
             

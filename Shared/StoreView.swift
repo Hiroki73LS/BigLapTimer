@@ -82,7 +82,7 @@ struct SecondView: View {
                     .border(Color.black, width: 2)
                     Spacer().frame(height: 15)
                     HStack{
-                        Text("(見やすいストップウォッチ Ver.1.8)")
+                        Text("(見やすいストップウォッチ Ver.1.8.1)")
                             .font(.subheadline)
                             .frame(maxWidth: .infinity, alignment: .center)
                     }

@@ -25,9 +25,9 @@ struct AdView: UIViewRepresentable {
 
 class UserProfile: ObservableObject {
     
-    @Published var username: String {
+    @Published var nowmode: Int {
         didSet {
-            UserDefaults.standard.set(username, forKey: "username")
+            UserDefaults.standard.set(nowmode, forKey: "nowmode")
         }}
     @Published var level: Int {
         didSet {
@@ -40,7 +40,7 @@ class UserProfile: ObservableObject {
         }}
     /// 初期化処理
     init() {
-        username = UserDefaults.standard.string(forKey: "username") ?? ""
+        nowmode = UserDefaults.standard.object(forKey: "nowmode") as? Int ?? 0
         level = UserDefaults.standard.object(forKey: "level") as? Int ?? 1
         mode = UserDefaults.standard.object(forKey: "mode") as? Bool ?? true
     }
@@ -261,6 +261,7 @@ struct ContentView: View {
                                 }
                                 Spacer().frame(height: 10)
                                 Button(action: {
+
                                     if vbmode2 == true{
                                         impactHeavy.impactOccurred() //■■■■■■■■■■■■■■tapticengine feedback■■■■■■■■■■■■■■
                                     }
@@ -707,6 +708,7 @@ struct ContentView: View {
         }
         }
         .onAppear {
+            
             if firstLaunch {
             isActive = true
             }
